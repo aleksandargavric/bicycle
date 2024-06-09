@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mm_proc_miner Web tool</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='logo_icon.png') }}">
+<style>
+  .logo {
+    width: 100%;
+    max-width: 150px;
+    display: block;
+    margin: 20px auto;
+  }
+  .todo-list {
+    margin-top: 1rem;
+  }
+  .custom-file-label::after {
+    content: "Browse";
+  }
+
+ .flex-container {
+  display: flex;
+  height: 100vh; /* 100% of the viewport height */
+}
+
+.left-container,
+.right-container {
+  /*flex: 1;  Each container fills up equal space */
+  overflow-y: auto; /* Enable vertical scroll if content overflows */
+  padding: 50px; /* Add padding for better spacing */
+}
+
+.left-container {
+      flex: 0.5s; /* Left container takes up 30% of the screen */
+    }
+
+    .right-container {
+      flex: 0.5s; /* Right container takes up 70% of the screen */
+      align-items: center;
+    }
+
+    .eventlog-image {
+      max-width: 50vw;
+      max-height: 30vh;
+      margin: 20px;
+
+    } 
+    .eventlog-image {
+    opacity: 0.3; /* Initial transparency set to 30% */
+    transition: opacity 0.3s ease; /* Smooth transition for opacity change */
+}
+
+.eventlog-image:hover {
+    opacity: 1; /* Full opacity when hovered over */
+}
+
+th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 5px;
+        white-space: nowrap; /* Prevent wrapping */
+}
+  </style>
+</head>
+<body>
+  <div class="flex-container">
+    <div class="container left-container">
+      <!-- Your left container content here -->
+      <img src="{{ url_for('static', filename='logo_icon.png') }}" alt="mmpm Logo" class="logo">
+      
+      <div class="text-center mb-4">
+        <h3>mm_proc_miner:</h3>
+        <h4>Multimodal event log creation</h4>
+        <p class="lead">Please define your Business-Knowledge domain and upload raw input data.</p>
+      </div>
+      
+      <div class="todo-section mb-4">
+        <h2 class="h4">Domain creation</h2>
+        
+
+          <div class="form-group">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="preset" value="dna" id="preset-list1">
+              <label class="form-check-label" for="preset-list1">dna</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="preset" value="ikea" id="preset-list2">
+              <label class="form-check-label" for="preset-list2">ikea</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="preset" value="dnaikea" id="preset-list3">
+              <label class="form-check-label" for="preset-list3">dna + ikea</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="preset" value="clear" id="preset-clear" checked>
+              <label class="form-check-label" for="preset-clear">Custom</label>
+            </div>
+          </div>
+          <div class="input-group">
+          <input type="text" class="form-control" id="todo-input" placeholder="Enter Activity/Step/Tool/Role">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="button-add-todo">Add</button>
+          </div>
+        </div>
+        <ul class="list-group todo-list" id="todo-list">
+        </ul>
+      </div>
+
+      
+        <p class="lead">Select modalities inputs for domain estimation and reference business-knowledge samples.</p>
+
+        <div class="candidate-texts mt-3">
+          <label for="textReferences" class="sr-only">Textual input</label>
+          <input type="text" class="form-control" id="textReferences" name="candidate_texts" placeholder="Enter ref. textual modality input (splitted with '|')">
+        </div>
+
+        <div class="input-group mt-3">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="imageReferences" name="image" accept="image/*" multiple>
+            <label class="custom-file-label" for="imageReferences"><i class="fas fa-image"></i> Choose ref. image files</label>
+          </div>
+        </div>
+        <div class="input-group mt-3">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="txtReferences" name="text" accept="text/plain" multiple>
+            <label class="custom-file-label" for="txtReferences"><i class="fas fa-file-alt"></i> Choose ref. text files</label>
+          </div>
+        </div>
+      <br>
+      <button class="btn btn-primary btn-block mb-4" onclick="uploadRefFiles()">Infer domain using BICycle</button>
+      
+      <h2 class="h4">Event log creation</h2>
+
+      <form action="#table-container" method="post" enctype="multipart/form-data">
+        <div class="input-group mt-3">
+          <div class='input-group date' id='datetimepicker8'>
+            <label class="custom-file-label-calendar" for="fallbackDateTime"><i class="fas fa-calendar"></i> Choose the timestamp reference        
+              <input type="datetime-local" id="fallbackDateTime" name="fallbackDateTime" value="2024-01-01T00:00" class="form-control" /></label>  
+          </div>
+        </div>
+        <p class="lead">Select modalities inputs for event log creation.</p>
+        <div class="candidate-texts mt-3">
+          <label for="textInput" class="sr-only">Textual input</label>
+          <input type="text" class="form-control" id="textInput" name="candidate_texts" placeholder="Enter PM textual modality input (splitted with '|')">
+        </div>
+
+        <div class="input-group mt-3">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="imageInput" name="image" accept="image/*" multiple>
+            <label class="custom-file-label" for="imageInput"><i class="fas fa-image"></i> Choose PM image files</label>
+          </div>
+        </div>
+
+        <div class="input-group mt-3">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="audioInput" name="audio" accept="audio/*" multiple>
+            <label class="custom-file-label" for="audioInput"><i class="fas fa-music"></i> Choose PM audio files</label>
+          </div>
+        </div>
+
+        <div class="input-group mt-3">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="videoInput" name="video" accept="video/*" multiple>
+            <label class="custom-file-label" for="videoInput"><i class="fas fa-video"></i> Choose PM video files</label>
+          </div>
+        </div>
+        <div class="input-group mt-3">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="txtInput" name="text" accept="text/plain" multiple>
+            <label class="custom-file-label" for="txtInput"><i class="fas fa-file-alt"></i> Choose PM textual files</label>
+          </div>
+        </div>
+
+        <button onclick="uploadPMFiles()" type="submit" class="btn btn-success btn-block mt-4">Make event logs</button>
+      </form>
+      <br><br>
+    </div>
+    <div class="container right-container">
+      
+      <div class="input-group mt-3" id="table-container">
+        <h3>Results Area</h3>
+        <img src="{{ url_for('static', filename='step1.png') }}" alt="Domain Creation Sample" class="eventlog-image">
+        <p class="text-center">Add reference input data to start with multimodal natural language assistand in business domain creation.</p>
+        <img src="{{ url_for('static', filename='step2.png') }}" alt="Event Log Sample" class="eventlog-image">
+        <p class="text-center">Add process mining (PM) input data to create a multimodal event log for process mining.</p>
+     
+      </div>
+    </div>
+  </div>
+  
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+
+</body>
+</html>
