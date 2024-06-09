@@ -8,6 +8,8 @@ This repository contains supplementary materials for the paper titled "Multimoda
 
 Raw data, representing diverse modalities of business processes, is ingested on the left side of our architecture. Through the Multimodal Process Miner \(mm_proc_miner\) andBusiness-knowledge Integration Cycles Method, our solution operates in the center, systematically blending domain expertise with data-driven insights to enhance process mining accuracy and relevance. Leveraging Disco, a process mining tool, the solution produces refined process models, showcased on the right.
 
+![Solution Video](solution_demo.gif)
+
 <div style="text-align:center;">
 <video width="300" height="260" controls>
   <source src="solution_demo.mp4" type="video/mp4">
