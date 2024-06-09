@@ -1,0 +1,19 @@
+@startuml
+
+Title: DNA Testing Process
+
+participant "Lab Technician" as LT
+participant "Sample Collection" as SC
+participant "DNA Extraction" as DE
+participant "PCR Amplification" as PCR
+participant "Electrophoresis" as E
+participant "Data Analysis" as DA
+
+LT -> SC: Collect Sample
+SC -> DE: Extract DNA
+DE -> PCR: Amplify DNA
+PCR -> E: Perform Electrophoresis
+E -> DA: Analyze Data
+DA -> LT: Provide Results
+
+@enduml

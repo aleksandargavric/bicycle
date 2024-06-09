@@ -139,7 +139,7 @@ Multimodal Business Processes dataset is given in the form of (1) filtered and p
 |   +-- (3) MMBP_activities_dataset.csv
 ```
 
-Evaluation data contains 2 domains (DNA collecting homekit and IKEA furniture assembly homekit) and then vision and auditort modality. Evaluation data is structured as follows:
+Evaluation data contains multimodal data in the domain of DNA collecting homekit. Evaluation data is structured as follows:
 ```bash
 +-- testdata
 |   +-- dna_audio_src1
@@ -160,15 +160,6 @@ Evaluation data contains 2 domains (DNA collecting homekit and IKEA furniture as
 |   +-- dna_videos_pov
 |   |   +-- example1.mp4
 |   |   +-- ...
-|   +-- ikea_audio_src1
-|   |   +-- example1.mp3
-|   |   +-- ...
-|   +-- ikea_images_3rd
-|   |   +-- example1.jpeg
-|   |   +-- ...
-|   +-- ikea_videos_3rd
-|       +-- example1.mp4
-|       +-- ...
 ```
 Additional textual samples for demonstrations are given at:
 ```bash
