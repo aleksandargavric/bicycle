@@ -1,6 +1,6 @@
 # Supplementary Material for "Multimodal Process Mining with the Business-knowledge Integration Cycles Method"
 
-This repository contains supplementary materials for the paper titled "Multimodal Process Mining with the Business-knowledge Integration Cycles Method" submitted to ICPM 2024.
+This repository contains supplementary materials for the paper titled "Multimodal Process Mining with the Business-knowledge Integration Cycles Method" submitted to PoEM 2024.
 
 ## mm_proc_miner demo
 
