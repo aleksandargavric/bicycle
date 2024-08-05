@@ -1,6 +1,6 @@
-# Supplementary Material for "Multimodal Process Mining with the Business-knowledge Integration Cycles Method"
+# Supplementary Material for "Enriching Business Process Event Logs with Multimodal Evidence"
 
-This repository contains supplementary materials for the paper titled "Multimodal Process Mining with the Business-knowledge Integration Cycles Method" submitted to PoEM 2024.
+This repository contains supplementary materials for the paper titled "Enriching Business Process Event Logs with Multimodal Evidence" submitted to PoEM 2024.
 
 ## mm_proc_miner demo
 
